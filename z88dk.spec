@@ -2,7 +2,7 @@ Summary:	Z88 Development Kit
 Summary(pl):	Zestaw developerski Z88
 Name:		z88dk
 Version:	1.33
-Release:	3
+Release:	4
 License:	Artistic
 Group:		Development/Tools
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}/%{name}v%{version}-src.tar.gz
@@ -12,7 +12,7 @@ Patch2:		%{name}-ppc.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define	_z88dkdir	%{_var}/lib/z88dk
+%define		_z88dkdir	%{_var}/lib/z88dk
 
 %description
 z88dk contains C compiler (zcc) for Z80, assembler (z80asm) and
@@ -28,7 +28,7 @@ Z80, m. in. dla ZX Spectrum, Z88, MSX.
 Summary:        Examples for Z88 Development Kit
 Summary(pl):    Przyklady dla zestawu developerskiego Z88
 Group:          Development/Tools
-Requires:	%{name}-%{version}
+Requires:	%{name} = %{version}
 
 %description examples
 Some sample programs for Z88.
