@@ -1,0 +1,12 @@
+diff -uNr z88dk.orig/src/z80asm/config.h z88dk/src/z80asm/config.h
+--- z88dk.orig/src/z80asm/config.h	Fri Apr 20 12:44:26 2001
++++ z88dk/src/z80asm/config.h	Sun Oct 13 00:18:43 2002
+@@ -55,7 +55,7 @@
+ /* Some clever config-ing if we're using GNUC */
+ 
+ #ifdef __GNUC__
+-#if #cpu(m68k) || #cpu(sparc) || #cpu(hppa)
++#if #cpu(m68k) || #cpu(sparc) || #cpu(hppa) || #cpu(powerpc)
+ #define ENDIAN 1
+ #endif
+ #endif	/* __GNUC__ */
