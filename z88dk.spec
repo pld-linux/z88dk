@@ -1,5 +1,5 @@
 Summary:	Z88 Development Kit
-Summary(pl):	Zestaw developerski Z88
+Summary(pl):	Zestaw programistyczny Z88
 Name:		z88dk
 Version:	1.33
 Release:	5
@@ -26,9 +26,9 @@ asembler (z80asm) i biblioteki dla ró¿nych komputerów z procesorem
 Z80, m. in. dla ZX Spectrum, Z88, MSX.
 
 %package examples
-Summary:        Examples for Z88 Development Kit
-Summary(pl):    Przyk³ady dla zestawu programistycznego Z88
-Group:          Development/Tools
+Summary:	Examples for Z88 Development Kit
+Summary(pl):	Przyk³ady dla zestawu programistycznego Z88
+Group:		Development/Tools
 Requires:	%{name} = %{version}
 
 %description examples
