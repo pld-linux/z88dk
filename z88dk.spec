@@ -27,7 +27,7 @@ Z80, m. in. dla ZX Spectrum, Z88, MSX.
 Summary:	Examples for Z88 Development Kit
 Summary(pl):	Przyk³ady dla zestawu programistycznego Z88
 Group:		Development/Tools
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description examples
 Some sample programs for Z88.
