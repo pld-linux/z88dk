@@ -6,12 +6,12 @@ Epoch:		1
 Release:	2
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://dl.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/z88dk/%{name}-src-%{version}.tar.gz
 # Source0-md5:	07c122c40c66093ede4ba3047e8f6128
 Patch0:		%{name}-typo.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://z88dk.sourceforge.net/
-ExcludeArch:	amd64 alpha ia64 ppc64 sparc64
+ExcludeArch:	alpha amd64 ia64 ppc64 s390x sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -28,7 +28,7 @@ Z80, m. in. dla ZX Spectrum, Z88, MSX.
 Summary:	Examples for Z88 Development Kit
 Summary(pl):	Przyk³ady dla zestawu programistycznego Z88
 Group:		Development/Tools
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description examples
 Some sample programs for Z88.
