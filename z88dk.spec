@@ -6,7 +6,7 @@ Epoch:		1
 Release:	2
 License:	Artistic
 Group:		Development/Tools
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}/%{name}-src-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
 Patch0:		%{name}-typo.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://z88dk.sourceforge.net/
