@@ -2,13 +2,14 @@ Summary:	Z88 Development Kit
 Summary(pl):	Zestaw developerski Z88
 Name:		z88dk
 Version:	1.33
-Release:	4
+Release:	5
 License:	Artistic
 Group:		Development/Tools
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}/%{name}v%{version}-src.tar.gz
 Patch0:		%{name}-make-clean.patch
 Patch1:		%{name}-make-config.patch
 Patch2:		%{name}-ppc.patch
+Patch3:		%{name}-types.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -26,7 +27,7 @@ Z80, m. in. dla ZX Spectrum, Z88, MSX.
 
 %package examples
 Summary:        Examples for Z88 Development Kit
-Summary(pl):    Przyklady dla zestawu developerskiego Z88
+Summary(pl):    Przyk³ady dla zestawu programistycznego Z88
 Group:          Development/Tools
 Requires:	%{name} = %{version}
 
@@ -34,15 +35,18 @@ Requires:	%{name} = %{version}
 Some sample programs for Z88.
 
 %description examples -l pl
-Kilka przyk<B3>adowych programw dla Z88.
+Kilka przyk³adowych programów dla Z88.
 
 %prep
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
+# avoid interactive rm in make clean
+rm -f lib/config/zcc.cfg
 %{__make} clean
 mv src/z80asm/config.h src/z80asm/config.h.orig
 mv src/zcc/zcc.h src/zcc/zcc.h.orig
