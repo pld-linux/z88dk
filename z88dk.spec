@@ -11,6 +11,7 @@ Source0:	http://dl.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
 Patch0:		%{name}-typo.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://z88dk.sourceforge.net/
+ExcludeArch:	amd64 alpha ia64 ppc64 sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
