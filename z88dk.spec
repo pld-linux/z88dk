@@ -39,6 +39,8 @@ Kilka przyk³adowych programów dla Z88.
 %patch0 -p1
 %patch1 -p1
 
+find www -name CVS -exec rm -rf {} \; ||:
+
 %build
 Z80_OZFILES=`pwd`/lib/
 ZCCCFG=`pwd`/lib/config/
