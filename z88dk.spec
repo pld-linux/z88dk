@@ -2,12 +2,13 @@ Summary:	Z88 Development Kit
 Summary(pl):	Zestaw developerski Z88
 Name:		z88dk
 Version:	1.33
-Release:	2
+Release:	3
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://prdownloads.sourceforge.net/z88dk/%{name}v%{version}-src.tar.gz
+Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}/%{name}v%{version}-src.tar.gz
 Patch0:		%{name}-make-clean.patch
 Patch1:		%{name}-make-config.patch
+Patch2:		%{name}-ppc.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -23,10 +24,23 @@ z88dk zawiera kompilator C (zcc) generuj±cy kod dla procesora Z80,
 asembler (z80asm) i biblioteki dla ró¿nych komputerów z procesorem
 Z80, m. in. dla ZX Spectrum, Z88, MSX.
 
+%package examples
+Summary:        Examples for Z88 Development Kit
+Summary(pl):    Przyklady dla zestawu developerskiego Z88
+Group:          Development/Tools
+Requires:	%{name}-%{version}
+
+%description examples
+Some sample programs for Z88.
+
+%description examples -l pl
+Kilka przyk<B3>adowych programw dla Z88.
+
 %prep
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__make} clean
@@ -88,6 +102,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_z88dkdir}/lib
 %dir %{_z88dkdir}/include
 %attr(755,root,root) %{_bindir}/*
-%{_examplesdir}/%{name}/*
 %{_z88dkdir}/include/*
 %{_z88dkdir}/lib/*
+
+%files examples
+%defattr(644,root,root,755)
+%{_examplesdir}/%{name}/*
