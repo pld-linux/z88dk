@@ -67,8 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.1st EXTENSIONS doc/* support LICENSE
-%dir %{_libdir}/%{name}
+%doc README.1st EXTENSIONS doc/* support www LICENSE
 %attr(755,root,root) %{_bindir}/*
 %{_libdir}/%{name}
 
