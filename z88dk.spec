@@ -7,6 +7,7 @@ Release:	2
 License:	Artistic
 Group:		Development/Tools
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
+# Source0-md5:	07c122c40c66093ede4ba3047e8f6128
 Patch0:		%{name}-typo.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://z88dk.sourceforge.net/
