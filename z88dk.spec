@@ -5,23 +5,23 @@ Version:	1.33
 Release:	2
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://prdownloads.sourceforge.net/z88dk/z88dkv%{version}-src.tar.gz
-Patch0:		z88dk-make-clean.patch
-Patch1:		z88dk-make-config.patch
+Source0:	http://prdownloads.sourceforge.net/z88dk/%{name}v%{version}-src.tar.gz
+Patch0:		%{name}-make-clean.patch
+Patch1:		%{name}-make-config.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define	_z88dkdir	%{_var}/lib/z88dk
 
 %description
-z88dk contains C compiler (zcc) for Z80, assembler (z80asm)
-and libraries for various Z80 based machines (such as ZX Spectrum,
-Z88, MSX).
+z88dk contains C compiler (zcc) for Z80, assembler (z80asm) and
+libraries for various Z80 based machines (such as ZX Spectrum, Z88,
+MSX).
 
 %description -l pl
 z88dk zawiera kompilator C (zcc) generuj±cy kod dla procesora Z80,
-asembler (z80asm) i biblioteki dla ró¿nych komputerów
-z procesorem Z80, m. in. dla ZX Spectrum, Z88, MSX.
+asembler (z80asm) i biblioteki dla ró¿nych komputerów z procesorem
+Z80, m. in. dla ZX Spectrum, Z88, MSX.
 
 %prep
 %setup -q -n %{name}
@@ -29,29 +29,29 @@ z procesorem Z80, m. in. dla ZX Spectrum, Z88, MSX.
 %patch1 -p1
 
 %build
-make clean
+%{__make} clean
 mv src/z80asm/config.h src/z80asm/config.h.orig
 mv src/zcc/zcc.h src/zcc/zcc.h.orig
 
 # build for the first time to build libraries
-sed "s?/usr/local/z88dk?`pwd`?" < src/z80asm/config.h.orig \
+sed "s?%{_prefix}/local/z88dk?`pwd`?" < src/z80asm/config.h.orig \
 > src/z80asm/config.h
-sed "s?/usr/local/z88dk?`pwd`?" < src/zcc/zcc.h.orig \
+sed "s?%{_prefix}/local/z88dk?`pwd`?" < src/zcc/zcc.h.orig \
 > src/zcc/zcc.h
-make CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=`pwd`
+%{__make} CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=`pwd`
 PATH=`pwd`/bin:$PATH ; export PATH
 ZCCCFG=`pwd`/lib/config/ ; export ZCCCFG
 cd libsrc
-make
-make install
+%{__make}
+%{__make} install
 cd ..
 
 # setting default paths and build again
-sed "s?/usr/local/z88dk?%{_z88dkdir}?" < src/z80asm/config.h.orig \
+sed "s?%{_prefix}/local/z88dk?%{_z88dkdir}?" < src/z80asm/config.h.orig \
 > src/z80asm/config.h
-sed "s?/usr/local/z88dk?%{_z88dkdir}?" < src/zcc/zcc.h.orig \
+sed "s?%{_prefix}/local/z88dk?%{_z88dkdir}?" < src/zcc/zcc.h.orig \
 > src/zcc/zcc.h
-make CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=%{_z88dkdir}
+%{__make} CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=%{_z88dkdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -77,14 +77,12 @@ install include/oz/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/oz
 install include/sys/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/sys
 cp -ar examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
-gzip -9nf README.1st EXTENSIONS doc/*.txt doc/netman/cat3z/*.3
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/* support
+%doc README.1st EXTENSIONS doc/* support
 %dir %{_examplesdir}/%{name}
 %dir %{_z88dkdir}
 %dir %{_z88dkdir}/lib
