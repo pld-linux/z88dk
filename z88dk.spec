@@ -3,7 +3,7 @@ Summary(pl):	Zestaw programistyczny Z88
 Name:		z88dk
 Version:	1.5
 Epoch:		1
-Release:	1
+Release:	2
 License:	Artistic
 Group:		Development/Tools
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}/%{name}-src-%{version}.tar.gz
@@ -11,8 +11,6 @@ Patch0:		%{name}-typo.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_z88dkdir	%{_var}/lib/z88dk
 
 %description
 z88dk contains C compiler (zcc) for Z80, assembler (z80asm) and
@@ -54,12 +52,16 @@ export PATH Z80_OZFILES ZCCCFG
 %{__make} -C `pwd`/libsrc
 %{__make} -C `pwd`/libsrc install
 
+cp support/zx/bin2tap.c .
+%{__cc} %{rpmcflags} %{rpmldflags} bin2tap.c -o bin2tap
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_prefix} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix}
+install bin2tap $RPM_BUILD_ROOT%{_bindir}
 cp -ar examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 %clean
