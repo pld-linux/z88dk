@@ -1,0 +1,25 @@
+--- z88dk/src/z80asm/modlink.c.orig	Tue Jul  4 17:33:30 2000
++++ z88dk/src/z80asm/modlink.c	Tue Oct 29 12:38:17 2002
+@@ -1052,9 +1052,10 @@
+ 
+   return fptr;
+ #else /* low byte, high byte order...    */
+-  long fptr;
++  long fptr = 0;
+ 
+-  fread (&fptr, sizeof (long), 1, fileid);
++  /* long is *at least* 4 bytes long, and we have to write exactly 4 bytes */
++  fread (&fptr, 4, 1, fileid);
+   return fptr;
+ #endif  
+ }
+@@ -1074,7 +1075,8 @@
+     }
+ #else 
+   /* low byte, high byte order... */
+-  fwrite (&fptr, sizeof (fptr), 1, fileid);
++  /* long is *at least* 4 bytes long, and we have to write exactly 4 bytes */
++  fwrite (&fptr, 4, 1, fileid);
+ #endif 
+ }
+ 
