@@ -1,15 +1,14 @@
 Summary:	Z88 Development Kit
 Summary(pl):	Zestaw programistyczny Z88
 Name:		z88dk
-Version:	1.33
-Release:	5
+Version:	1.5
+Epoch:		1
+Release:	1
 License:	Artistic
 Group:		Development/Tools
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}/%{name}v%{version}-src.tar.gz
-Patch0:		%{name}-make-clean.patch
-Patch1:		%{name}-make-config.patch
-Patch2:		%{name}-ppc.patch
-Patch3:		%{name}-types.patch
+Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}/%{name}-src-%{version}.tar.gz
+Patch0:		%{name}-typo.patch
+Patch1:		%{name}-DESTDIR.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -41,58 +40,26 @@ Kilka przyk³adowych programów dla Z88.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
-# avoid interactive rm in make clean
-rm -f lib/config/zcc.cfg
-%{__make} clean
-mv src/z80asm/config.h src/z80asm/config.h.orig
-mv src/zcc/zcc.h src/zcc/zcc.h.orig
-
-# build for the first time to build libraries
-sed "s?%{_prefix}/local/z88dk?`pwd`?" < src/z80asm/config.h.orig \
-> src/z80asm/config.h
-sed "s?%{_prefix}/local/z88dk?`pwd`?" < src/zcc/zcc.h.orig \
-> src/zcc/zcc.h
-%{__make} CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=`pwd`
-PATH=`pwd`/bin:$PATH ; export PATH
-ZCCCFG=`pwd`/lib/config/ ; export ZCCCFG
-cd libsrc
-%{__make}
-%{__make} install
-cd ..
-
-# setting default paths and build again
-sed "s?%{_prefix}/local/z88dk?%{_z88dkdir}?" < src/z80asm/config.h.orig \
-> src/z80asm/config.h
-sed "s?%{_prefix}/local/z88dk?%{_z88dkdir}?" < src/zcc/zcc.h.orig \
-> src/zcc/zcc.h
-%{__make} CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=%{_z88dkdir}
+Z80_OZFILES=`pwd`/lib/
+ZCCCFG=`pwd`/lib/config/
+PATH=$PATH:`pwd`/bin
+CC="%{__cc}"
+CFLAGS="%{rpmcflags}"
+CCOPT=-DUNIX
+export CC CFLAGS CCOPT
+export PATH Z80_OZFILES ZCCCFG
+%{__make} prefix=%{_prefix}
+%{__make} -C `pwd`/libsrc
+%{__make} -C `pwd`/libsrc install
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir} \
-	$RPM_BUILD_ROOT%{_z88dkdir}/{bin,lib/{clibs,config}} \
-	$RPM_BUILD_ROOT%{_z88dkdir}/include/{net,oz,sys} \
+install -d $RPM_BUILD_ROOT%{_prefix} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
-install \
-	bin/{appmake,copt,sccz80,z80asm,zcc,zcpp} $RPM_BUILD_ROOT%{_bindir}
-
-install lib/config/*.cfg $RPM_BUILD_ROOT%{_z88dkdir}/lib/config
-install lib/clibs/*.lib $RPM_BUILD_ROOT%{_z88dkdir}/lib/clibs
-install lib/clibs/README $RPM_BUILD_ROOT%{_z88dkdir}/lib/clibs
-install lib/[ad-z]* $RPM_BUILD_ROOT%{_z88dkdir}/lib
-install lib/README $RPM_BUILD_ROOT%{_z88dkdir}/lib
-install lib/{bas_crt0.asm,bastoken.def,char.def,cpm_crt0.asm,\
-cpm_crt0.opt,ctrlchar.def} $RPM_BUILD_ROOT%{_z88dkdir}/lib
-
-install include/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include
-install include/net/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/net
-install include/oz/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/oz
-install include/sys/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/sys
+%{__make} install DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix}
 cp -ar examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 %clean
@@ -100,15 +67,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.1st EXTENSIONS doc/* support
-%dir %{_examplesdir}/%{name}
-%dir %{_z88dkdir}
-%dir %{_z88dkdir}/lib
-%dir %{_z88dkdir}/include
+%doc README.1st EXTENSIONS doc/* support LICENSE
+%dir %{_libdir}/%{name}
 %attr(755,root,root) %{_bindir}/*
-%{_z88dkdir}/include/*
-%{_z88dkdir}/lib/*
+%{_libdir}/%{name}
 
 %files examples
 %defattr(644,root,root,755)
+%dir %{_examplesdir}/%{name}
 %{_examplesdir}/%{name}/*
