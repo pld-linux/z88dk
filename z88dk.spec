@@ -49,10 +49,10 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{_z88dkdir}/{bin,lib/{clibs,config}}
-install -d $RPM_BUILD_ROOT%{_z88dkdir}/include/{net,oz,sys}
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+install -d $RPM_BUILD_ROOT%{_bindir} \
+	$RPM_BUILD_ROOT%{_z88dkdir}/{bin,lib/{clibs,config}} \
+	$RPM_BUILD_ROOT%{_z88dkdir}/include/{net,oz,sys} \
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 install \
 	bin/{appmake,copt,sccz80,z80asm,zcc,zcpp} $RPM_BUILD_ROOT%{_bindir}
@@ -70,7 +70,6 @@ install include/net/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/net
 install include/oz/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/oz
 install include/sys/*.h $RPM_BUILD_ROOT%{_z88dkdir}/include/sys
 cp -ar examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
-
 
 gzip -9nf README.1st EXTENSIONS doc/*.txt doc/netman/cat3z/*.3
 
