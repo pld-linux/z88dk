@@ -1,0 +1,11 @@
+--- z88dk/libsrc/Makefile	Fri May 11 10:43:23 2001
++++ z88dk.new/libsrc/Makefile	Mon Apr 29 21:24:49 2002
+@@ -542,7 +542,7 @@
+ 	cd z80_crt0s; make clean
+ 	cd z88 ; make clean
+ 	cd z88math ; make clean
+-	rm *.lib
++	rm -f *.lib
+ 
+ install:
+ 	cp *.lib ../lib/clibs/
