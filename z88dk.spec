@@ -2,7 +2,7 @@ Summary:	Z88 Development Kit
 Summary(pl):	Zestaw developerski Z88
 Name:		z88dk
 Version:	1.33
-Release:	1
+Release:	2
 License:	Artistic
 Group:		Development/Tools
 Source0:	http://prdownloads.sourceforge.net/z88dk/z88dkv%{version}-src.tar.gz
@@ -30,22 +30,28 @@ z procesorem Z80, m. in. dla ZX Spectrum, Z88, MSX.
 
 %build
 make clean
-# setting defaults paths
 mv src/z80asm/config.h src/z80asm/config.h.orig
-sed "s?/usr/local/z88dk?%{_z88dkdir}?" < src/z80asm/config.h.orig \
-> src/z80asm/config.h
-
 mv src/zcc/zcc.h src/zcc/zcc.h.orig
-sed "s?/usr/local/z88dk?%{_z88dkdir}?" < src/zcc/zcc.h.orig \
-> src/zcc/zcc.h
 
-make CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=%{_z88dkdir}
-PATH=`pwd`/bin:$PATH
-export PATH
+# build for the first time to build libraries
+sed "s?/usr/local/z88dk?`pwd`?" < src/z80asm/config.h.orig \
+> src/z80asm/config.h
+sed "s?/usr/local/z88dk?`pwd`?" < src/zcc/zcc.h.orig \
+> src/zcc/zcc.h
+make CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=`pwd`
+PATH=`pwd`/bin:$PATH ; export PATH
+ZCCCFG=`pwd`/lib/config/ ; export ZCCCFG
 cd libsrc
 make
 make install
 cd ..
+
+# setting default paths and build again
+sed "s?/usr/local/z88dk?%{_z88dkdir}?" < src/z80asm/config.h.orig \
+> src/z80asm/config.h
+sed "s?/usr/local/z88dk?%{_z88dkdir}?" < src/zcc/zcc.h.orig \
+> src/zcc/zcc.h
+make CC=%{__cc} CFLAGS="%{rpmcflags}" prefix=%{_z88dkdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
