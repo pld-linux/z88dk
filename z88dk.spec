@@ -11,7 +11,8 @@ Source0:	http://dl.sourceforge.net/z88dk/%{name}-src-%{version}.tar.gz
 Patch0:		%{name}-typo.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://z88dk.sourceforge.net/
-ExcludeArch:	alpha amd64 ia64 ppc64 s390x sparc64
+BuildRequires:	rpmbuild(macros) >= 1.213
+ExcludeArch:	%{x8664} alpha ia64 ppc64 s390x sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
