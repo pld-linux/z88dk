@@ -1,17 +1,16 @@
 Summary:	Z88 Development Kit
 Summary(pl):	Zestaw programistyczny Z88
 Name:		z88dk
-Version:	1.5
+Version:	1.6
 Epoch:		1
-Release:	2
+Release:	1
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://dl.sourceforge.net/z88dk/%{name}-src-%{version}.tar.gz
-# Source0-md5:	07c122c40c66093ede4ba3047e8f6128
-Patch0:		%{name}-typo.patch
-Patch1:		%{name}-DESTDIR.patch
+Source0:	http://dl.sourceforge.net/z88dk/%{name}-src-%{version}.tgz
+# Source0-md5:	5fd75dea26da3c3d863b9e15f6524af9
 URL:		http://z88dk.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.213
+BuildRequires:	sed >= 4.0
 ExcludeArch:	%{x8664} alpha ia64 ppc64 s390x sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -39,12 +38,14 @@ Kilka przyk³adowych programów dla Z88.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
-%patch1 -p1
 
 find www -name CVS -exec rm -rf {} \; ||:
 
+sed -i -e 's/$(prefix)/$(DESTDIR)\/$(prefix)/g' Makefile
+sed -i -e 's/\.\/config\.sh $(DESTDIR)\//\.\/config.sh /' Makefile
+
 %build
+mkdir bin
 Z80_OZFILES=`pwd`/lib/
 ZCCCFG=`pwd`/lib/config/
 PATH=$PATH:`pwd`/bin
@@ -65,7 +66,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_prefix} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix}
+%{__make} install DESTDIR=$RPM_BUILD_ROOT DEFAULT=zx prefix=%{_prefix}
 install bin2tap $RPM_BUILD_ROOT%{_bindir}
 cp -ar examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
