@@ -2,8 +2,8 @@ Summary:	Z88 Development Kit
 Summary(pl):	Zestaw programistyczny Z88
 Name:		z88dk
 Version:	1.6
-Epoch:		1
 Release:	1
+Epoch:		1
 License:	Artistic
 Group:		Development/Tools
 Source0:	http://dl.sourceforge.net/z88dk/%{name}-src-%{version}.tgz
@@ -66,9 +66,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_prefix} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT DEFAULT=zx prefix=%{_prefix}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT DEFAULT=zx prefix=%{_prefix}
 install bin2tap $RPM_BUILD_ROOT%{_bindir}
-cp -ar examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
