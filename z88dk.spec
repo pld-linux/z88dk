@@ -1,5 +1,5 @@
 Summary:	Z88 Development Kit
-Summary(pl.UTF-8):   Zestaw programistyczny Z88
+Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
 Version:	1.6
 Release:	1
@@ -26,7 +26,7 @@ Z80, m. in. dla ZX Spectrum, Z88, MSX.
 
 %package examples
 Summary:	Examples for Z88 Development Kit
-Summary(pl.UTF-8):   Przykłady dla zestawu programistycznego Z88
+Summary(pl.UTF-8):	Przykłady dla zestawu programistycznego Z88
 Group:		Development/Tools
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
