@@ -1,5 +1,5 @@
 Summary:	Z88 Development Kit
-Summary(pl):	Zestaw programistyczny Z88
+Summary(pl.UTF-8):   Zestaw programistyczny Z88
 Name:		z88dk
 Version:	1.6
 Release:	1
@@ -19,22 +19,22 @@ z88dk contains C compiler (zcc) for Z80, assembler (z80asm) and
 libraries for various Z80 based machines (such as ZX Spectrum, Z88,
 MSX).
 
-%description -l pl
-z88dk zawiera kompilator C (zcc) generuj�cy kod dla procesora Z80,
-asembler (z80asm) i biblioteki dla r�nych komputer�w z procesorem
+%description -l pl.UTF-8
+z88dk zawiera kompilator C (zcc) generujący kod dla procesora Z80,
+asembler (z80asm) i biblioteki dla różnych komputerów z procesorem
 Z80, m. in. dla ZX Spectrum, Z88, MSX.
 
 %package examples
 Summary:	Examples for Z88 Development Kit
-Summary(pl):	Przyk�ady dla zestawu programistycznego Z88
+Summary(pl.UTF-8):   Przykłady dla zestawu programistycznego Z88
 Group:		Development/Tools
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description examples
 Some sample programs for Z88.
 
-%description examples -l pl
-Kilka przyk�adowych program�w dla Z88.
+%description examples -l pl.UTF-8
+Kilka przykładowych programów dla Z88.
 
 %prep
 %setup -q -n %{name}
