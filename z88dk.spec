@@ -1,13 +1,13 @@
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
-Version:	1.6
+Version:	1.7
 Release:	1
 Epoch:		1
 License:	Artistic
 Group:		Development/Tools
 Source0:	http://dl.sourceforge.net/z88dk/%{name}-src-%{version}.tgz
-# Source0-md5:	5fd75dea26da3c3d863b9e15f6524af9
+# Source0-md5:	cbb910bcb8beb0b15b101a4420d3fb25
 URL:		http://z88dk.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
@@ -38,28 +38,22 @@ Kilka przykładowych programów dla Z88.
 
 %prep
 %setup -q -n %{name}
-
-find www -name CVS -exec rm -rf {} \; ||:
-
 sed -i -e 's/$(prefix)/$(DESTDIR)\/$(prefix)/g' Makefile
 sed -i -e 's/\.\/config\.sh $(DESTDIR)\//\.\/config.sh /' Makefile
 
 %build
-mkdir bin
 Z80_OZFILES=`pwd`/lib/
 ZCCCFG=`pwd`/lib/config/
 PATH=$PATH:`pwd`/bin
 CC="%{__cc}"
-CFLAGS="%{rpmcflags}"
 CCOPT=-DUNIX
-export CC CFLAGS CCOPT
+export CC CCOPT
 export PATH Z80_OZFILES ZCCCFG
-%{__make} prefix=%{_prefix}
+%{__make} CFLAGS="%{rpmcflags}" prefix=%{_prefix}
 %{__make} -C `pwd`/libsrc
 %{__make} -C `pwd`/libsrc install
 
-cp support/zx/bin2tap.c .
-%{__cc} %{rpmcflags} %{rpmldflags} bin2tap.c -o bin2tap
+%{__cc} %{rpmcflags} %{rpmldflags} support/zx/tapmaker.c -o tapmaker
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -68,7 +62,7 @@ install -d $RPM_BUILD_ROOT%{_prefix} \
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT DEFAULT=zx prefix=%{_prefix}
-install bin2tap $RPM_BUILD_ROOT%{_bindir}
+install tapmaker $RPM_BUILD_ROOT%{_bindir}
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 %clean
@@ -76,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.1st EXTENSIONS doc/* support www LICENSE
+%doc README.1st EXTENSIONS doc/* support LICENSE
 %attr(755,root,root) %{_bindir}/*
 %{_libdir}/%{name}
 
