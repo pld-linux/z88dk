@@ -57,12 +57,12 @@ export PATH Z80_OZFILES ZCCCFG
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_prefix} \
-	$RPM_BUILD_ROOT%{_examplesdir}/%{name}
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT DEFAULT=zx prefix=%{_prefix}
 install tapmaker $RPM_BUILD_ROOT%{_bindir}
-cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -75,5 +75,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files examples
 %defattr(644,root,root,755)
-%dir %{_examplesdir}/%{name}
-%{_examplesdir}/%{name}/*
+%{_examplesdir}/%{name}-%{version}
