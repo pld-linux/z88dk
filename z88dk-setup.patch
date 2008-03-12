@@ -1,0 +1,11 @@
+--- z88dk/Makefile.old	2008-03-12 12:03:25.000000000 +0100
++++ z88dk/Makefile	2008-03-12 12:04:02.000000000 +0100
+@@ -51,7 +51,7 @@ amiga:  clean-bins
+ 
+ 
+ setup:
+-	echo '#define PREFIX "${prefix}$"/lib/z88dk"' > src/config.h
++	echo '#define PREFIX "${prefix_share}$"/z88dk"' > src/config.h
+ 	echo '#define UNIX 1' >> src/config.h
+ 
+ appmake:
