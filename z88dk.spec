@@ -1,13 +1,14 @@
+%define		subver	20101107
+%define		rel	1
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
-%define snap	20101107
 Name:		z88dk
 Version:	1.10
-Release:	0.%{snap}.1
+Release:	0.%{subver}.%{rel}
 Epoch:		1
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://nightly.z88dk.org/%{name}-%{snap}.tgz
+Source0:	http://nightly.z88dk.org/%{name}-%{subver}.tgz
 # Source0-md5:	17725bbb3e7f945fe17627578ace6062
 Patch0:		%{name}-setup.patch
 URL:		http://z88dk.sourceforge.net/
@@ -41,15 +42,20 @@ Kilka przykładowych programów dla Z88.
 %setup -q -n %{name}
 %patch0 -p1
 
+rm doc/netman/.sock_open.man.swp
+find -name CVS | xargs rm -rf
+
 %build
-Z80_OZFILES=`pwd`/lib/
-ZCCCFG=`pwd`/lib/config/
-PATH=$PATH:`pwd`/bin
-CC="%{__cc}"
-CCOPT=-DUNIX
-export CC CCOPT
-export PATH Z80_OZFILES ZCCCFG
-%{__make} CFLAGS="%{rpmcflags}" prefix=%{_prefix}
+PWD=$(pwd)
+export Z80_OZFILES=$PWD/lib/
+export ZCCCFG=$PWD/lib/config/
+export PATH=$PATH:$PWD/bin
+export CC="%{__cc}"
+export CCOPT=-DUNIX
+%{__make} \
+	CFLAGS="%{rpmcflags}" \
+	prefix=%{_prefix}
+
 %{__make} -j1 -C libsrc
 %{__make} -j1 -C libsrc install
 
@@ -61,8 +67,11 @@ install -d $RPM_BUILD_ROOT%{_prefix} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT DEFAULT=zx prefix=%{_prefix}
-install tapmaker $RPM_BUILD_ROOT%{_bindir}
+	prefix=%{_prefix} \
+	DEFAULT=zx \
+	DESTDIR=$RPM_BUILD_ROOT
+
+install -p tapmaker $RPM_BUILD_ROOT%{_bindir}
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
