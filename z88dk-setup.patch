@@ -1,7 +1,7 @@
---- z88dk/Makefile.old	2008-03-12 12:03:25.000000000 +0100
-+++ z88dk/Makefile	2008-03-12 12:04:02.000000000 +0100
-@@ -51,7 +51,7 @@ amiga:  clean-bins
- 
+--- z88dk/Makefile.old	2010-11-07 10:27:34.000000000 +0100
++++ z88dk/Makefile	2010-11-07 10:28:01.000000000 +0100
+@@ -18,7 +18,7 @@
+ all: setup appmake copt zcpp sccz80 z80asm zcc z80nm config
  
  setup:
 -	echo '#define PREFIX "${prefix}$"/lib/z88dk"' > src/config.h

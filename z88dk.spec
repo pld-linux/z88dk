@@ -1,13 +1,14 @@
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
+%define snap	20101107
 Name:		z88dk
-Version:	1.8
-Release:	1
+Version:	1.10
+Release:	0.%{snap}.1
 Epoch:		1
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://dl.sourceforge.net/z88dk/%{name}-src-%{version}.tgz
-# Source0-md5:	f3a762cb6263430f76163e3e85fa1102
+Source0:	http://nightly.z88dk.org/%{name}-%{snap}.tgz
+# Source0-md5:	17725bbb3e7f945fe17627578ace6062
 Patch0:		%{name}-setup.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.213
@@ -49,8 +50,8 @@ CCOPT=-DUNIX
 export CC CCOPT
 export PATH Z80_OZFILES ZCCCFG
 %{__make} CFLAGS="%{rpmcflags}" prefix=%{_prefix}
-%{__make} -C `pwd`/libsrc
-%{__make} -C `pwd`/libsrc install
+%{__make} -j1 -C `pwd`/libsrc
+%{__make} -j1 -C `pwd`/libsrc install
 
 %{__cc} %{rpmcflags} %{rpmldflags} support/zx/tapmaker.c -o tapmaker
 
