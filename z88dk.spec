@@ -1,3 +1,6 @@
+# TODO
+# - package like other cross compilers: /usr/<platform> ?
+# - rename conflicting manpages?
 %define		subver	20101107
 %define		rel	1
 Summary:	Z88 Development Kit
@@ -42,8 +45,11 @@ Kilka przykładowych programów dla Z88.
 %setup -q -n %{name}
 %patch0 -p1
 
+
 rm doc/netman/.sock_open.man.swp
 find -name CVS | xargs rm -rf
+
+mv doc/netman .
 
 %build
 PWD=$(pwd)
@@ -63,8 +69,7 @@ export CCOPT=-DUNIX
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_prefix} \
-	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install -d $RPM_BUILD_ROOT{%{_mandir}/man3,%{_examplesdir}/%{name}-%{version}}
 
 %{__make} install \
 	prefix=%{_prefix} \
@@ -74,14 +79,23 @@ install -d $RPM_BUILD_ROOT%{_prefix} \
 install -p tapmaker $RPM_BUILD_ROOT%{_bindir}
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
+cp -a netman/man3z/* $RPM_BUILD_ROOT%{_mandir}/man3
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
 %doc README.1st EXTENSIONS doc/* support LICENSE
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/appmake
+%attr(755,root,root) %{_bindir}/copt
+%attr(755,root,root) %{_bindir}/sccz80
+%attr(755,root,root) %{_bindir}/tapmaker
+%attr(755,root,root) %{_bindir}/z80asm
+%attr(755,root,root) %{_bindir}/zcc
+%attr(755,root,root) %{_bindir}/zcpp
 %{_datadir}/%{name}
+%{_mandir}/man3/*.3*
 
 %files examples
 %defattr(644,root,root,755)
