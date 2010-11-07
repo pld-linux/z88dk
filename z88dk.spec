@@ -50,8 +50,8 @@ CCOPT=-DUNIX
 export CC CCOPT
 export PATH Z80_OZFILES ZCCCFG
 %{__make} CFLAGS="%{rpmcflags}" prefix=%{_prefix}
-%{__make} -j1 -C `pwd`/libsrc
-%{__make} -j1 -C `pwd`/libsrc install
+%{__make} -j1 -C libsrc
+%{__make} -j1 -C libsrc install
 
 %{__cc} %{rpmcflags} %{rpmldflags} support/zx/tapmaker.c -o tapmaker
 
