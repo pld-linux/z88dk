@@ -1,8 +1,5 @@
-# TODO
-# - package like other cross compilers: /usr/<platform> ?
-# - rename conflicting manpages?
-##%define		subver	20101107
-##%define		rel	1
+# TODO:
+# - rename conflicting manpages
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
@@ -97,7 +94,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/zcc
 %attr(755,root,root) %{_bindir}/zcpp
 %{_datadir}/%{name}
-%{_mandir}/man3/*.3*
+%{_mandir}/man3/DeviceOffline.3*
+%{_mandir}/man3/DeviceOnline.3*
+%{_mandir}/man3/QueryPackage.3*
+%{_mandir}/man3/byteorder.3*
+%{_mandir}/man3/get*by*.3*
+%{_mandir}/man3/[hn]to[hn][ls].3*
+%{_mandir}/man3/pktdrive.3*
+%{_mandir}/man3/resolve.3*
+%{_mandir}/man3/reverse_addr_lookup.3*
+%{_mandir}/man3/sock_*.3*
+%{_mandir}/man3/tcp_*.3*
 
 %files examples
 %defattr(644,root,root,755)
