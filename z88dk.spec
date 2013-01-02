@@ -3,13 +3,13 @@
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
-Version:	1.10
+Version:	1.10.1
 Release:	1
 Epoch:		1
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://downloads.sourceforge.net/z88dk/%{name}-src-%{version}.tgz
-# Source0-md5:	b7cfa9b441be8ed7e9f35972c99c3153
+Source0:	http://downloads.sourceforge.net/z88dk/%{name}-%{version}.tgz
+# Source0-md5:	7898bc04f9e5275845d6117cafa74096
 Patch0:		%{name}-setup.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.213
