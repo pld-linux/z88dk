@@ -1,10 +1,8 @@
-# TODO:
-# - rename conflicting manpages
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
 Version:	1.10.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	Artistic
 Group:		Development/Tools
@@ -78,7 +76,9 @@ install -d $RPM_BUILD_ROOT{%{_mandir}/man3,%{_examplesdir}/%{name}-%{version}}
 install -p tapmaker $RPM_BUILD_ROOT%{_bindir}
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-cp -a netman/man3z/* $RPM_BUILD_ROOT%{_mandir}/man3
+cd netman/man3z
+for m in *; do cp -a $m $RPM_BUILD_ROOT%{_mandir}/man3/z88dk_$m; done
+cd -
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,17 +94,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/zcc
 %attr(755,root,root) %{_bindir}/zcpp
 %{_datadir}/%{name}
-%{_mandir}/man3/DeviceOffline.3*
-%{_mandir}/man3/DeviceOnline.3*
-%{_mandir}/man3/QueryPackage.3*
-%{_mandir}/man3/byteorder.3*
-%{_mandir}/man3/get*by*.3*
-%{_mandir}/man3/[hn]to[hn][ls].3*
-%{_mandir}/man3/pktdrive.3*
-%{_mandir}/man3/resolve.3*
-%{_mandir}/man3/reverse_addr_lookup.3*
-%{_mandir}/man3/sock_*.3*
-%{_mandir}/man3/tcp_*.3*
+%{_mandir}/man3/z88dk_DeviceOffline.3*
+%{_mandir}/man3/z88dk_DeviceOnline.3*
+%{_mandir}/man3/z88dk_QueryPackage.3*
+%{_mandir}/man3/z88dk_byteorder.3*
+%{_mandir}/man3/z88dk_get*by*.3*
+%{_mandir}/man3/z88dk_[hn]to[hn][ls].3*
+%{_mandir}/man3/z88dk_pktdrive.3*
+%{_mandir}/man3/z88dk_resolve.3*
+%{_mandir}/man3/z88dk_reverse_addr_lookup.3*
+%{_mandir}/man3/z88dk_sock_*.3*
+%{_mandir}/man3/z88dk_tcp_*.3*
 
 %files examples
 %defattr(644,root,root,755)
