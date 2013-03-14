@@ -2,19 +2,18 @@ Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
 Version:	1.10.1
-Release:	2
+Release:	3
 Epoch:		1
 License:	Artistic
 Group:		Development/Tools
 Source0:	http://downloads.sourceforge.net/z88dk/%{name}-%{version}.tgz
 # Source0-md5:	7898bc04f9e5275845d6117cafa74096
 Patch0:		%{name}-setup.patch
+Patch1:		%{name}-format_security.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.213
 ExcludeArch:	%{x8664} alpha ia64 ppc64 s390x sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define Werror_cflags -Wformat
 
 %description
 z88dk contains C compiler (zcc) for Z80, assembler (z80asm) and
@@ -41,7 +40,7 @@ Kilka przykładowych programów dla Z88.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-
+%patch1 -p1
 
 rm doc/netman/.sock_open.man.swp
 find -name CVS | xargs rm -rf
