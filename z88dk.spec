@@ -1,17 +1,19 @@
+%define		snap	20130619
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
-Version:	1.10.1
-Release:	3
+Version:	1.10.2
+Release:	0.%{snap}.1
 Epoch:		1
 License:	Artistic
 Group:		Development/Tools
-Source0:	http://downloads.sourceforge.net/z88dk/%{name}-%{version}.tgz
-# Source0-md5:	7898bc04f9e5275845d6117cafa74096
+Source0:	http://nightly.z88dk.org/%{name}-%{snap}.tgz
+# Source0-md5:	7b355c87444ac6d8bec6f1c0d2c59e3a
 Patch0:		%{name}-setup.patch
 Patch1:		%{name}-format_security.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.213
+BuildRequires:	sed >= 4.0
 ExcludeArch:	%{x8664} alpha ia64 ppc64 s390x sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -76,7 +78,11 @@ install -p tapmaker $RPM_BUILD_ROOT%{_bindir}
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 cd netman/man3z
-for m in *; do cp -a $m $RPM_BUILD_ROOT%{_mandir}/man3/z88dk_$m; done
+for m in *;
+do
+	sed -i -e 's|^\.so man3z/|.so man3/z88dk_|' $m
+	cp -a $m $RPM_BUILD_ROOT%{_mandir}/man3/z88dk_$m;
+done
 cd -
 
 %clean
