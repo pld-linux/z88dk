@@ -1,4 +1,4 @@
-%define		snap	20130619
+%define		snap	20130829
 Summary:	Z88 Development Kit
 Summary(pl.UTF-8):	Zestaw programistyczny Z88
 Name:		z88dk
@@ -8,9 +8,8 @@ Epoch:		1
 License:	Artistic
 Group:		Development/Tools
 Source0:	http://nightly.z88dk.org/%{name}-%{snap}.tgz
-# Source0-md5:	7b355c87444ac6d8bec6f1c0d2c59e3a
+# Source0-md5:	2e34758c8b4d9556d766dcc943923c19
 Patch0:		%{name}-setup.patch
-Patch1:		%{name}-format_security.patch
 URL:		http://z88dk.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
@@ -42,7 +41,6 @@ Kilka przykładowych programów dla Z88.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%patch1 -p1
 
 rm doc/netman/.sock_open.man.swp
 find -name CVS | xargs rm -rf
