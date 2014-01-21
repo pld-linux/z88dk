@@ -1,0 +1,11 @@
+--- z88dk/src/z80asm/Makefile.orig	2014-01-21 14:29:43.557533563 +0100
++++ z88dk/src/z80asm/Makefile	2014-01-21 14:30:08.544586620 +0100
+@@ -117,7 +117,7 @@ TARGET =		z80asm$(EXESUFFIX)
+ MSVC_TARGET =	../../win32/Debug/$(TARGET)
+ 
+ LOCAL_LIB :=	lib
+-CFLAGS +=		-I$(LOCAL_LIB) -Wall
++override CFLAGS +=		-I$(LOCAL_LIB) -Wall
+ 
+ #------------------------------------------------------------------------------
+ # main
