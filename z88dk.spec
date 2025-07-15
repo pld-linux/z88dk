@@ -41,8 +41,8 @@ Kilka przykładowych programów dla Z88.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 rm doc/netman/.sock_open.man.swp
 find -name CVS | xargs rm -rf
